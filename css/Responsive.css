@@ -10,3 +10,11 @@
     }
 }
 
+.km-box label,
+.millas-box label,
+.metros-box label,
+.centimetros-box label,
+.milimetros-box label,
+.leguas-box label {
+    width: 100%;
+}
