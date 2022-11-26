@@ -1,0 +1,12 @@
+@media(max-width:650px){
+    .km-box,
+    .millas-box,
+    .metros-box,
+    .centimetros-box,
+    .milimetros-box,
+    .leguas-box {
+        display: grid;
+        grid-template-rows: repeat(2,1fr);
+    }
+}
+
