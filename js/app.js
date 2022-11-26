@@ -92,8 +92,6 @@ function verificarOpcion(e) {
         return;
 
     } else if (id === 'conv-cinco') {
-        console.log('entroo')
-
         conversor5.style.display = 'grid';
         inputKm3.addEventListener('blur', verificar);
         inputLe.addEventListener('blur', verificar);
@@ -114,13 +112,21 @@ function volverMenu() {
 
 }
 
+function limpiarHTML() {
+    // Forma lenta
+    //mensajeDiv.innerHTML='';
 
+    //Esta es una mejor forma de limpiar el html, es mas rapida
+    while (mensajeDiv.firstChild) {
+        mensajeDiv.removeChild(mensajeDiv.firstChild);
+    }
+}
 
 
 
 //funciones
 function verificar(e) {
-
+    limpiarHTML()
     const valor = e.target;
     if (valor.value === '' || isNaN(valor.value)) {
         mandarMensaje('Coloca un parametro valido', 'error');
@@ -133,6 +139,9 @@ function verificar(e) {
     mandarMensaje('Este es el resultado');
     for (let i = 0; i < btnOk.length; i++) {
         btnOk[i].style.background = 'green';
+        btnOk[i].style.value = 'Limpiar';
+        btnOk[i].classList.add('ok');
+        btnOk[i].addEventListener('click',verificarBtnOk);
     }
     if (valor.id === 'km' || valor.id === 'm') {
 
@@ -159,6 +168,29 @@ function verificar(e) {
 
 }
 
+function verificarBtnOk(e){
+    if(e.target.classList.contains('ok')){
+        e.target.classList.remove('ok');
+        e.target.classList.add('borrar');
+        e.target.value="Limpiar";
+        e.target.style.width="90px";
+        
+        return;
+    }else if(e.target.classList.contains('borrar')){
+        console.log(e.target.value)
+        e.target.classList.remove('borrar');
+        e.target.classList.add('ok');
+        limpiarHTML()
+        mensajeDiv.style.display = 'none';
+        e.target.style.width="50px";
+        e.target.value="OK";
+        resetFormulario();
+        return;
+
+
+    }
+}
+
 function calcularConv1(e) {
 
     if (e.id === 'km') {
@@ -173,9 +205,6 @@ function calcularConv1(e) {
         inputKm.style.border = '2px solid red';
         inputKm.value = inputMi.value * 1.60934;
     }
-    setTimeout(function () {
-        resetFormulario();
-    }, 3000);
 
 
 }
@@ -194,9 +223,6 @@ function calcularConv2(e) {
         inputMts.style.border = '2px solid red';
         inputMts.value = inputKm2.value * 1000;
     }
-    setTimeout(function () {
-        resetFormulario();
-    }, 3000);
 
 
 }
@@ -215,9 +241,6 @@ function calcularConv3(e) {
         inputCm.style.border = '2px solid red';
         inputCm.value = inputMts2.value * 100;
     }
-    setTimeout(function () {
-        resetFormulario();
-    }, 3000);
 
 
 }
@@ -236,9 +259,6 @@ function calcularConv4(e) {
         inputMl.style.border = '2px solid red';
         inputMl.value = inputCm2.value * 10;
     }
-    setTimeout(function () {
-        resetFormulario();
-    }, 3000);
 
 
 }
@@ -256,10 +276,6 @@ function calcularConv5(e) {
         inputLe.style.border = '2px solid red';
         inputLe.value = inputKm3.value * 0.207124;
     }
-    setTimeout(function () {
-        resetFormulario();
-    }, 3000);
-
 
 }
 
@@ -274,17 +290,18 @@ function mandarMensaje(mensaje, tipo) {
     if (tipo === 'error') {
         mensajeDiv.style.display = 'flex';
         mensajeDiv.style.background = 'red';
+        setTimeout(function () {
+            parrafoMensaje.remove();
+            mensajeDiv.style.display = 'none';
+            resetFormulario();
+    
+        }, 3000);
 
     } else {
         mensajeDiv.style.display = 'flex';
         mensajeDiv.style.background = 'green';
     }
-    setTimeout(function () {
-        parrafoMensaje.remove();
-        mensajeDiv.style.display = 'none';
-        resetFormulario();
-
-    }, 3000);
+    
 
 }
 
